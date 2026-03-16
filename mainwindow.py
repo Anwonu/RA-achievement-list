@@ -120,7 +120,7 @@ class MainWindow(Window):
 			if (api):
 				for item in api:
 					for child in self.children:
-						if (str(child.game_id) == str(item['GameID'])):
+						if (child.name == "Achievement window" and str(child.game_id) == str(item['GameID'])):
 							child.checkCompletedAchievements(item)
 
 		#self.window.after(ct.refresh_time, self.checkLatestAchievements)
