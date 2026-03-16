@@ -11,6 +11,19 @@ I was a bit disapponted that we couldn't resize that window, so I tried to see i
 - Doesn't have any kind of animation
 - Doesn't have any kind of autoscroll (and scrolling is only possible if hovering over an area without badges)
 
+## Compiling
+I made and tested this code with Python 3.14.3, Windows 10.
+
+You can just run main.py to run the code:
+```
+py main.py
+```
+
+I created the .exe file with pyinstaller:
+```
+pyinstaller --onefile --noconsole main.py
+```
+
 ## How to use
 First of all, leave the executable in a folder with read/write permissions. It will attempt to create a config.ini file and a "badges" folder, where it'll save the badge images.
 
@@ -25,8 +38,6 @@ Get the ULID if you want.
 [image]
 
 Choose your options for the list, then open the achievement list.
-
-[image]
 
 When opened, you can right click on the window to open a setting window; you can use it to set the exact amount of achievements per row/column.
 
