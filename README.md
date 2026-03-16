@@ -5,6 +5,8 @@
 This is basically a copy of [RA Tracker](https://github.com/colossus-gaming/retroachievements-layout-manager)'s achievement list, but with some differences.
 I was a bit disapponted that we couldn't resize that window, so I tried to see if I could do something similar with that change. This was mostly for personal use, but I ended up trying to make it a bit more user friendly, and added some new stuff as well.
 
+I don't plan on adding any other functionality from RA Tracker; what they do is already good enough in my opinion, and my plan isn't to become a full copy of them.
+
 ## Changes
 - Able to change window size so you can see more/less achievement per row, and more/less rows at once
 - Can open more than one list; this can be useful for multisets
@@ -46,7 +48,11 @@ When opened, you can right click on the window to open a setting window; you can
 
 ![Image 3](images/img3.PNG)
 
-The size and position of the achievement lists are saved, so the next list you open, it'll keep them.
+The timer is a visual indicator to show when the next update will happen. Possible to edit colors and size. It won't run when there's no list open.
+
+![Image 5](images/img5.PNG)
+
+The size and position of the achievement lists and timer are saved, so the next list you open, it'll keep them.
 
 Also, if you close the initial window dirently, all windows will close together; then, the next time you open it, all achievement windows will reopen as well.
 
