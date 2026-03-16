@@ -29,19 +29,19 @@ First of all, leave the executable in a folder with read/write permissions. It w
 
 Follow the instruction to get the web API key, and put the username. Use the checkmarks below them to make them uneditable, so you can't change them by mistake later.
 
-[image]
+![Image 1](images/img1.PNG)
 
 The program will hide the key, but it's saved in plain text in config.ini; so if you open that file and stream it by mistake, I'd suggest resetting it for a new key.
 
 Get the ULID if you want.
 
-[image]
+![Image 2](images/img2.PNG)
 
 Choose your options for the list, then open the achievement list.
 
 When opened, you can right click on the window to open a setting window; you can use it to set the exact amount of achievements per row/column.
 
-[image]
+![Image 3](images/img3.PNG)
 
 The size and position of the achievement lists are saved, so the next list you open, it'll keep them.
 
@@ -51,7 +51,10 @@ Refresh timer is set to 30 seconds. I understand making it shorter would look be
 
 ## Known issues
 - This is meant to be used for 1 user only; if you open an achievement list and change the username/ULID, the program will start to update for that new user while keeping the old user's list. I don't have any plans to change that.
-- Right now the API documentation don't mention any way to get a subset list from their subset ID, so you need to use their game ID. The easiest way is to hover over a subset link and see their URL with the game ID. [image]
+- Right now the API documentation don't mention any way to get a subset list from their subset ID, so you need to use their game ID. The easiest way is to hover over a subset link and see their URL with the game ID.
+
+![Image 4](images/img4.PNG)
+
 - Sometimes the total badge count is wrong when downloading badges. That's because I just take the amount of achievements and multiply by 2, but there are some achievements that use the same exact badge, and so the downloading will finish before it gets to the total count.
 - You can't cancel the badge downloading in the middle (unless you force-kill it, of course), so it may take a while to download large sets (it downloads 2 images per achievement).
 - If an achievement receives a new badge, the program won't check for that. To force redownloading badge images, delete its folder inside the "badges" folder.
