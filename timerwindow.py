@@ -103,7 +103,7 @@ class TimerWindow(Window):
 		self.window.bind("<Button-3>", self.on_timer_rightclick)
 		self.window.bind("<Configure>", self.on_window_resize)
 
-		self.canvas = tk.Canvas(self.window, width=self.width, height=self.height, background=self.bg_color)
+		self.canvas = tk.Canvas(self.window, width=self.width, height=self.height, background=self.bg_color, bd=0, highlightthickness=0, relief='ridge')
 		self.canvas.pack()
 		self.arc = self.canvas.create_arc(10, 10, self.width-10, self.height-10, fill=self.timer_color, outline=self.timer_color, start=90, extent=0)
 
