@@ -10,7 +10,6 @@ I was a bit disapponted that we couldn't resize that window, so I tried to see i
 
 - Doesn't have any kind of animation
 - Doesn't have any kind of autoscroll (and scrolling is only possible if hovering over an area without badges)
-- Can't edit background color (yet.. maybe)
 
 ## How to use
 First of all, leave the executable in a folder with read/write permissions. It will attempt to create a config.ini file and a "badges" folder, where it'll save the badge images.
@@ -46,3 +45,4 @@ Refresh timer is set to 30 seconds. I understand making it shorter would look be
 - You can't cancel the badge downloading in the middle (unless you force-kill it, of course), so it may take a while to download large sets (it downloads 2 images per achievement).
 - If an achievement receives a new badge, the program won't check for that. To force redownloading badge images, delete its folder inside the "badges" folder.
 - This was designed with hardcore in mind; it will probably fail to work with softcore in most places. I might change that later.
+- Maximizing a resizable window will make its settings act a bit wrong; it'll show the correct size, but won't be able to change them until you restore the window.
