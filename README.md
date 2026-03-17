@@ -59,7 +59,7 @@ The size and position of the achievement lists and timer are saved, so the next 
 
 Also, if you close the initial window dirently, all windows will close together; then, the next time you open it, all achievement windows will reopen as well.
 
-Refresh timer is set to 30 seconds. I'm a bit reluctant to let this be editable. People like to see changes as close to real time as possible, but pulling requests too often for 
+Refresh timer is set to 30 seconds. I'm a bit reluctant to let this be editable. People like to see changes as close to real time as possible, but pulling requests too often for updates that usually comes every few minutes is pretty wasteful.
 
 ## Known issues
 - This is meant to be used for 1 user only; if you open an achievement list and change the username/ULID, the program will start to update for that new user while keeping the old user's list. I don't have any plans to change that.
