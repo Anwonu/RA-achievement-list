@@ -3,8 +3,11 @@
 ![Example](images/example.PNG)
 
 This is basically a copy of [RA Tracker](https://github.com/colossus-gaming/retroachievements-layout-manager)'s achievement list, but with some differences.
+
 Initially, I made it to be able to change the window's size, without realizing I just had an old version =D
+
 This was mostly for personal use, but I ended up trying to make it a bit more user friendly, and added some stuff as well.
+
 
 I don't plan on adding any other functionality from RA Tracker; what they do is already good enough in my opinion, and my plan isn't to become a full copy of them.
 
