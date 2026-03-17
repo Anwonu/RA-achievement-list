@@ -146,6 +146,7 @@ class MainWindow(Window):
 
 
 		def on_apikey_change(*args):
+			open_btn.config(state=checkOpenBtnState())
 			updateConfig('API', 'key', self.apikey_entry.get())
 
 		self.apikey_entry.trace_add("write", on_apikey_change)
@@ -175,6 +176,7 @@ class MainWindow(Window):
 
 
 		def on_username_change(*args):
+			open_btn.config(state=checkOpenBtnState())
 			updateConfig('User', 'username', self.username_entry.get())
 
 		self.username_entry.trace_add("write", on_username_change)
@@ -375,9 +377,14 @@ class MainWindow(Window):
 
 				self.createAchievementWindow(completed, notcompleted, game_id, size, show_unlocked, show_locked, bg_color, numWindow)
 			else:
-				showWarning('Error', "ID doesn't exist.")
+				showWarning('Error', "ID doesn't exist (or some other info is wrong).")
 
-		open_btn = tk.Button(self.window, text="Open achievement list", font=font, command=on_openlist_btn_clicked)
+		def checkOpenBtnState():
+			if self.apikey_entry.get() == '' or self.username_entry.get() == '':
+				return "disabled"
+			return "normal"
+
+		open_btn = tk.Button(self.window, text="Open achievement list", font=font, command=on_openlist_btn_clicked, state=checkOpenBtnState())
 		open_btn.grid(row=curRow, column=1, padx=padx, pady=(pady+20, pady))
 		curRow += 1
 
