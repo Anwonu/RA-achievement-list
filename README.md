@@ -3,14 +3,14 @@
 ![Example](images/example.PNG)
 
 This is basically a copy of [RA Tracker](https://github.com/colossus-gaming/retroachievements-layout-manager)'s achievement list, but with some differences.
-I was a bit disapponted that we couldn't resize that window, so I tried to see if I could do something similar with that change. This was mostly for personal use, but I ended up trying to make it a bit more user friendly, and added some new stuff as well.
+Initially, I made it to be able to change the window's size, without realizing I just had an old version =D
+This was mostly for personal use, but I ended up trying to make it a bit more user friendly, and added some stuff as well.
 
 I don't plan on adding any other functionality from RA Tracker; what they do is already good enough in my opinion, and my plan isn't to become a full copy of them.
 
 ## Changes
-- Able to change window size so you can see more/less achievement per row, and more/less rows at once
 - Can open more than one list; this can be useful for multisets
-- Decrease badge size up to half the original; if for some reason you want to see all 1000 achievements at once, now it's possible
+- Decrease badge size up to half the original; if for some reason you want to see all 1000 achievements at once, it's possible
 - Show only locked or only unlocked achievements; useful when you want to put them in different places in your layout
 
 - Doesn't have any kind of animation
@@ -56,7 +56,7 @@ The size and position of the achievement lists and timer are saved, so the next 
 
 Also, if you close the initial window dirently, all windows will close together; then, the next time you open it, all achievement windows will reopen as well.
 
-Refresh timer is set to 30 seconds. I understand making it shorter would look better with very low delay, but calling the API once per second just to check if there are new achievements unlocked is also incredibly wasteful.
+Refresh timer is set to 30 seconds. I'm a bit reluctant to let this be editable. People like to see changes as close to real time as possible, but pulling requests too often for 
 
 ## Known issues
 - This is meant to be used for 1 user only; if you open an achievement list and change the username/ULID, the program will start to update for that new user while keeping the old user's list. I don't have any plans to change that.
