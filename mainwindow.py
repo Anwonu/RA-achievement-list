@@ -14,6 +14,7 @@ from alerts import *
 from window import *
 from achievementwindow import *
 from timerwindow import *
+from progresswindow import *
 import tooltip
 
 
@@ -82,7 +83,7 @@ class MainWindow(Window):
 
 		cheevoOpened = False
 		for child in self.children:
-			if child.name == "Achievement window":
+			if child.name == "Achievement window" or child.name == "Progress window":
 				cheevoOpened = True
 
 		if not cheevoOpened:
@@ -120,7 +121,7 @@ class MainWindow(Window):
 			if (api):
 				for item in api:
 					for child in self.children:
-						if (child.name == "Achievement window" and str(child.game_id) == str(item['GameID'])):
+						if (child.name in ["Achievement window", "Progress window"] and str(child.game_id) == str(item['GameID'])):
 							child.checkCompletedAchievements(item)
 
 		#self.window.after(ct.refresh_time, self.checkLatestAchievements)
@@ -300,6 +301,36 @@ class MainWindow(Window):
 
 		# this next part is kind of a mess, but it works ig
 
+		def on_openprogress_btn_clicked(game_id=None, bg_color=None, numWindow=1):
+			if game_id == None:
+				game_id = self.gameid_entry.get().strip()
+			if bg_color == None:
+				bg_color = self.bg_color
+
+			if game_id == '':
+				showWarning('Error', "Put a game ID.")
+				return
+
+			if not game_id.isdigit():
+				showWarning('Error', "Put a valid ID.")
+				return
+
+			game = getGameWithUser(game_id)
+			if game:
+				cheevos = game['Achievements']
+				# I could just take the NumAwardedToUserHardcore, but saving the ids allows me to update with the same api call
+				completed = [] # only achievement ids
+				totalAch = game['NumAchievements']
+
+				for item in cheevos.values():
+					# check if completed
+					if 'DateEarnedHardcore' in item:
+						completed.append(int(item['ID']))
+
+				self.createProgressWindow(completed, totalAch, game_id, bg_color, numWindow)
+			else:
+				showWarning('Error', "ID doesn't exist (or some other info is wrong).")
+
 		def on_openlist_btn_clicked(game_id=None, size=None, show_unlocked=None, show_locked=None, bg_color=None, numWindow=1):
 			if game_id == None:
 				game_id = self.gameid_entry.get().strip()
@@ -323,14 +354,12 @@ class MainWindow(Window):
 			game = getGameWithUser(game_id)
 			if game:
 				# download badges, show progress on that if it is downloading, and separate completed from not completed achievements
-				showProgression = False
 				counter = 0
 				total = game['NumAchievements'] * 2
 
 				game_folder = ct.badges_folder + game_id + '/'
 				if not os.path.exists(game_folder):
 					os.mkdir(game_folder)
-					showProgression = True
 					open_btn.config(state="disabled")
 					dl_msg_widget.config(text="Downloading badges... 0/%d" % total)
 
@@ -384,6 +413,9 @@ class MainWindow(Window):
 				return "disabled"
 			return "normal"
 
+
+		progress_btn = tk.Button(self.window, text="Open game progress", font=font, command=on_openprogress_btn_clicked, state=checkOpenBtnState())
+		progress_btn.grid(row=curRow, column=0, padx=padx, pady=(pady+20, pady))
 		open_btn = tk.Button(self.window, text="Open achievement list", font=font, command=on_openlist_btn_clicked, state=checkOpenBtnState())
 		open_btn.grid(row=curRow, column=1, padx=padx, pady=(pady+20, pady))
 		curRow += 1
@@ -399,8 +431,10 @@ class MainWindow(Window):
 		def checkOpenedWindows():
 			config = getConfig()
 			for s in config:
-				m = re.search(r"Achievement list (\d+)", s)
-				if m:
+				ach = re.search(r"Achievement list (\d+)", s)
+				prog = re.search(r"Progress (\d+)", s)
+
+				if ach:
 					if 'game_id' in config[s] and config[s]['game_id'].isdigit() and int(config[s]['game_id']) > 0:
 						size = 1
 						show_unlocked = True
@@ -416,7 +450,16 @@ class MainWindow(Window):
 						if 'bg_color' in config[s] and config[s]['bg_color'] != '':
 							bg_color = config[s]['bg_color']
 
-						on_openlist_btn_clicked(config[s]['game_id'], size, show_unlocked, show_locked, bg_color, int(m.group(1)))
+						on_openlist_btn_clicked(config[s]['game_id'], size, show_unlocked, show_locked, bg_color, int(ach.group(1)))
+
+				elif prog:
+					if 'game_id' in config[s] and config[s]['game_id'].isdigit() and int(config[s]['game_id']) > 0:
+						bg_color = "magenta"
+
+						if 'bg_color' in config[s] and config[s]['bg_color'] != '':
+							bg_color = config[s]['bg_color']
+
+						on_openprogress_btn_clicked(config[s]['game_id'], bg_color, int(prog.group(1)))
 
 				elif s == "Timer":
 					if 'opened' in config[s] and str(config[s]['opened']) == 'True':
@@ -430,13 +473,23 @@ class MainWindow(Window):
 
 
 
+	def createProgressWindow(self, completed, totalAch, game_id, bg_color, numWindow=1):
+		for child in self.children:
+			if child.name == "Progress window" and numWindow < child.numWindow + 1:
+				numWindow = child.numWindow + 1
+
+		progressWindow = ProgressWindow(parent=self, numWindow=numWindow, completed=completed, totalAch=totalAch, game_id=game_id, bg_color=bg_color)
+		progressWindow.create()
+		self.window.update()
+
+		self.runTimer()
+
 	def createAchievementWindow(self, completed, notcompleted, game_id, size, show_unlocked, show_locked, bg_color, numWindow=1):
 		for child in self.children:
 			if child.name == "Achievement window" and numWindow < child.numWindow + 1:
 				numWindow = child.numWindow + 1
 
-		cheevoWindow = AchievementWindow(parent=self, numWindow=numWindow, game_id=game_id, size=size, show_unlocked=show_unlocked, show_locked=show_locked, bg_color=bg_color)
-		cheevoWindow.prepareLists(completed, notcompleted)
+		cheevoWindow = AchievementWindow(parent=self, numWindow=numWindow, completed=completed, notcompleted=notcompleted, game_id=game_id, size=size, show_unlocked=show_unlocked, show_locked=show_locked, bg_color=bg_color)
 		cheevoWindow.create()
 		self.window.update()
 
