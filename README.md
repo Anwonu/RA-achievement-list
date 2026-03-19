@@ -55,6 +55,10 @@ The timer is a visual indicator to show when the next update will happen. Possib
 
 ![Image 5](images/img5.PNG)
 
+You can open a progress bar for games as well. Can edit colors and font size.
+
+![Image 6](images/img6.PNG)
+
 The size and position of the achievement lists and timer are saved, so the next list you open, it'll keep them.
 
 Also, if you close the initial window dirently, all windows will close together; then, the next time you open it, all achievement windows will reopen as well.
